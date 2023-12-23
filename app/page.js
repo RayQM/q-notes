@@ -1,33 +1,42 @@
 "use client"; 
+import { AuthCredential } from "firebase/auth";
 import { useUserAuth } from "./utility/auth-context";
+import Link from "next/link";
+import { RedirectType, redirect } from "next/navigation";
 
 export default function Home() {
 
-  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+  const { user, gitHubSignIn, firebaseSignOut,gMailSignIn } = useUserAuth();
 
-  const handleSignIn = () => {
-    gitHubSignIn();
-  };
+ async function handleSignIn(){
+    try{
+      gitHubSignIn()
+    }
+    catch(err){
+      console.log(err)
+        }
+ }
 
   const handleSignOut = () => {
     firebaseSignOut();
   };
 
-  const testFunction = () =>{
-    console.log("111111")
+  const handleSignInWithGmail = () =>{
+    gMailSignIn()
   }
-  return (
-    <main>
-      User: {user?.displayName}
-      <br />
-      {user ? (
-        <button onClick={handleSignOut}>Sign Out</button>
-      ) : (
-        <button onClick={handleSignIn}>Sign In</button>
-      )}
-     
-    </main>
-  );
+if(user){
+  return redirect("/notePage")
+  
 }
-
+else{
+  return(
+    <main>
+      <div>
+        <button onClick={handleSignInWithGmail}>sign with Gmail</button>
+      </div>
+    </main>
+  )
+}
+  
+}
 
