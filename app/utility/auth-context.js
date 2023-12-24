@@ -5,7 +5,6 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
-  GithubAuthProvider,
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "./firebase";
@@ -14,11 +13,6 @@ const AuthContext = createContext();
  
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
- 
-  const gitHubSignIn = () => {
-    const provider = new GithubAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
   
   const gMailSignIn = () =>{
     const provider = new GoogleAuthProvider()
@@ -37,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [user]);
  
   return (
-    <AuthContext.Provider value={{ user, gitHubSignIn, firebaseSignOut,gMailSignIn }}>
+    <AuthContext.Provider value={{ user, firebaseSignOut ,gMailSignIn }}>
       {children}
     </AuthContext.Provider>
   );

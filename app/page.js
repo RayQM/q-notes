@@ -1,39 +1,24 @@
 "use client"; 
-import { AuthCredential } from "firebase/auth";
-import { useUserAuth } from "./utility/auth-context";
-import Link from "next/link";
-import { RedirectType, redirect } from "next/navigation";
 
+import { useUserAuth } from "./utility/auth-context";
+
+import { RedirectType, redirect } from "next/navigation";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
 export default function Home() {
 
-  const { user, gitHubSignIn, firebaseSignOut,gMailSignIn } = useUserAuth();
-
- async function handleSignIn(){
-    try{
-      gitHubSignIn()
-    }
-    catch(err){
-      console.log(err)
-        }
- }
-
-  const handleSignOut = () => {
-    firebaseSignOut();
-  };
+  const { user,gMailSignIn } = useUserAuth();
 
   const handleSignInWithGmail = () =>{
     gMailSignIn()
   }
 if(user){
-  return redirect("/notePage")
-  
+  return redirect("/notePage", RedirectType.push)
 }
 else{
   return(
-    <main>
-      <div>
-        <button onClick={handleSignInWithGmail}>sign with Gmail</button>
-      </div>
+    <main className=" flex flex-col justify-center items-center min-h-screen bg-black">        
+      <Button variant="secondary" size="lg" onClick={handleSignInWithGmail}>sign with Gmail</Button>
     </main>
   )
 }

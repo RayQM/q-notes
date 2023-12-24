@@ -1,8 +1,11 @@
 "use client"
 import { useUserAuth } from "../utility/auth-context";
 import { RedirectType, redirect } from "next/navigation";
+import NavbarComponent from "../component/navbar";
+import NotesViewer from "../component/notesViewer";
+import ConsoleBar from "../component/console";
 const qNotes = () =>{
-    const { user, gitHubSignIn, firebaseSignOut,gMailSignIn } = useUserAuth();
+    const { user,firebaseSignOut} = useUserAuth();
 
     const handleSignOut = () => {
         firebaseSignOut();
@@ -10,17 +13,16 @@ const qNotes = () =>{
     
     if(user){
         return(
-        <main>
-            <h1>QNotes</h1>
+        <main className=" flex flex-col">
+            <NavbarComponent/>
+            <NotesViewer/>
+            <ConsoleBar />
             <div><button onClick={handleSignOut}>sign out</button></div>
         </main>
     )
     }
     else{
-       return redirect("/")
+       return redirect("/", RedirectType.push)
     }
-
-
-    
 }
 export default qNotes;
