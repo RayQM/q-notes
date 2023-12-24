@@ -5,11 +5,9 @@ import NavbarComponent from "../component/navbar";
 import NotesViewer from "../component/notesViewer";
 import ConsoleBar from "../component/console";
 const qNotes = () =>{
-    const { user,firebaseSignOut} = useUserAuth();
+    const { user} = useUserAuth();
 
-    const handleSignOut = () => {
-        firebaseSignOut();
-      };
+
     
     if(user){
         return(
@@ -17,7 +15,7 @@ const qNotes = () =>{
             <NavbarComponent/>
             <NotesViewer/>
             <ConsoleBar />
-            <div><button onClick={handleSignOut}>sign out</button></div>
+           
         </main>
     )
     }

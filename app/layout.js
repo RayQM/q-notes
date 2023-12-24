@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthContextProvider } from "./utility/auth-context";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-      <AuthContextProvider>{children}</AuthContextProvider>;
+      <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );
