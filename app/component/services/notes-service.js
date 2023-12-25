@@ -11,11 +11,11 @@ import {
     where,
   } from "firebase/firestore";
 
-  export const addBlogPost = async (post) => {
+  export const addNotePost = async (post) => {
     try {
-      const docRef = await addDoc(collection(db, "blog-posts"), post);
+      const docRef = await addDoc(collection(db, "note-post"), post);
       return docRef.id;
     } catch (error) {
-      console.error("Error in addBlogPost: ", error);
+      console.error("Error in addNotePost: ", error);
     }
   };

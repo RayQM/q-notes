@@ -1,13 +1,19 @@
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
-import { addBlogPost } from './services/notes-service';
+import { addNotePost } from './services/notes-service';
+import { useUserAuth } from '../utility/auth-context';
 function ConsoleBar() {
+  const { user } = useUserAuth();
+
+  if (!user) {
+    return null;
+  }
   return (
     <form onSubmit={async (e) => {
           e.preventDefault();
           const { title, content } = e.target.elements;
-          await addBlogPost({
+          await addNotePost({
             title: title.value,
             content: content.value,
           });
