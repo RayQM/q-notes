@@ -44,8 +44,14 @@ function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote} ) {
 
     if(note && note.id)
     {   
-    
-       onEditNote(note)
+      const newNote = {
+        id:note.id,
+        title,
+        date: note.date,
+        content, 
+      }; 
+      console.log(newNote)
+      onEditNote(newNote)
     }
     else{
       const newNote = {
