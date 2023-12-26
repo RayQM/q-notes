@@ -1,36 +1,116 @@
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
-import { addNotePost } from './services/notes-service';
+import { deleteNote } from './services/notes-service';
 import { useUserAuth } from '../utility/auth-context';
-function ConsoleBar() {
-  const { user } = useUserAuth();
+import { updateNote } from './services/notes-service';
+import { useState,useEffect } from 'react';
+import { format } from 'date-fns';
 
-  if (!user) {
-    return null;
+function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote} ) {
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [content, setContent] = useState("");
+  const { user} = useUserAuth();
+  const formatDate = (note) =>{
+    const parsedDate = new Date(note.date);
+    const formattedDate = parsedDate.toLocaleDateString('en-CA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    return formattedDate;
   }
-  return (
-    <form onSubmit={async (e) => {
-          e.preventDefault();
-          const { title, content } = e.target.elements;
-          await addNotePost({
-            title: title.value,
-            content: content.value,
-          });
-          title.value = "";
-          content.value = "";
-        }}>
-      
 
-      <div className='items-center bg-dark flex flex-row justify-center gap-4 px-20' style={{ minHeight: "39.4vh" }}  >
-            <div className='container mx-4'>
-              <input id="title" name="title" type="text" className=" form-control form-control-sm mb-4 " placeholder='Title'></input>
-              <textarea className="form-control form-control-lg " rows="5" placeholder='New Note' id="content" name="content"></textarea>
+  useEffect(
+    () => {
+        if(note){
+            setTitle(note.title|| "");
+            setContent(note.content || "");
+            setDate(formatDate(note) || "");
+        }
+        else
+        {
+            setTitle("");
+            setContent("");
+            setDate(""); 
+        }
+    },
+    [note]
+)
+ 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if(note && note.id)
+    {   
+    
+       onEditNote(note)
+    }
+    else{
+      const newNote = {
+      title,
+      date: new Date(date),
+      content, 
+    }; 
+    onCreateNote(user,newNote);
+    }
+    
+    handleDeselect();
+  };
+  
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  };
+  
+  function del()
+    { 
+        deleteNote(user, note);
+        setSelectedNote();
+        setTitle("");
+        setContent("");
+        setDate(""); 
+       
+    }
+
+    function handleDeselect()
+    {
+
+      setSelectedNote();
+    }
+
+   
+
+  return (
+    <form  onSubmit={handleSubmit}>
+      <div className='items-center bg-dark flex flex-row justify-center gap-2 px-20' style={{ minHeight: "39.4vh" }}  >
+            <div className='container mx-4 flex flex-row gap-16 '>
+              <div className='flex flex-col gap-11'>
+                <input required onChange={handleTitleChange} value={title} className="bg-secondary form-control  mb-4 " placeholder='Title'/>
+                <input
+                  type="date"
+                  required
+                  onChange={handleDateChange}
+                  value={date}
+                  className="bg-secondary form-control  mb-4 "
+                />
+              </div>
+              
+              <textarea className="form-control form-control-lg bg-secondary " rows="5" placeholder='New Note' required onChange={handleContentChange} value={content}></textarea>
             </div>
             
             <div className='flex flex-col gap-5'>
-                <Button variant="secondary" type='submit'>Add</Button>
-                <Button variant="secondary">Delete</Button>
+                <Button variant="secondary" type='submit' >Save</Button>
+                <Button variant="secondary" onClick={del} >Delete</Button>
             </div>
       </div>
     </form>
