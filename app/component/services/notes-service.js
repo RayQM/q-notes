@@ -1,6 +1,4 @@
 import {db} from "../../utility/firebase"
-import React from "react";
-import { format } from 'date-fns';
 
 import {
     collection,
@@ -24,23 +22,22 @@ import {
       console.error("Error in addNotePost: ", error);
     }
   };
-
+  
  
   export const subscribeToNotes = (user,onUpdate) => {
 
     try {
       const colRef = collection(db,"users",user.uid, "notes");
-      // const q = query(colRef, where("date", ">", new Date())); // only get events that have not yet occurred
   
       return onSnapshot(colRef, (snapshot) => {
         const Notes = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        console.log (Notes)
+        
         Notes.forEach((event) => {
           event.date = event.date.toDate();
-          event.date.setDate(event.date.getDate() + 1); // terrible hack to fix timezone issue, better solution is to use moment.js
+          event.date.setDate(event.date.getDate() + 1); 
         });
         onUpdate(Notes);
       });
@@ -60,8 +57,6 @@ import {
         console.log(err);
     }
 }
-
-
 export async function updateNote(user, note)
 {
       try{
@@ -77,4 +72,6 @@ export async function updateNote(user, note)
         }
     
 }
+
+    
 

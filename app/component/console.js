@@ -5,29 +5,20 @@ import { deleteNote } from './services/notes-service';
 import { useUserAuth } from '../utility/auth-context';
 import { updateNote } from './services/notes-service';
 import { useState,useEffect } from 'react';
-import { format } from 'date-fns';
+import formatDate from './dateFormat';
 
 function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote} ) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [content, setContent] = useState("");
   const { user} = useUserAuth();
-  const formatDate = (note) =>{
-    const parsedDate = new Date(note.date);
-    const formattedDate = parsedDate.toLocaleDateString('en-CA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    return formattedDate;
-  }
 
   useEffect(
     () => {
         if(note){
-            setTitle(note.title|| "");
-            setContent(note.content || "");
-            setDate(formatDate(note) || "");
+            setTitle(note.title);
+            setContent(note.content );
+            setDate(formatDate(note))
         }
         else
         {
@@ -39,31 +30,34 @@ function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote} ) {
     [note]
 )
  
-  const handleSubmit = (event) => {
-    event.preventDefault();
+const handleSubmit = (event) => {
+  event.preventDefault();
 
-    if(note && note.id)
-    {   
-      const newNote = {
-        id:note.id,
-        title,
-        date: note.date,
-        content, 
-      }; 
-      console.log(newNote)
-      onEditNote(newNote)
-    }
-    else{
-      const newNote = {
+  if(note && note.id)
+  {   
+    const newNote = {
+      id:note.id,
       title,
-      date: new Date(date),
+      date:new Date(date),
       content, 
     }; 
-    onCreateNote(user,newNote);
-    }
-    
-    handleDeselect();
+    console.log(newNote)
+    onEditNote(user,newNote)
+  }
+  else{
+    const newNote = {
+    title,
+    date: new Date(date),
+    content, 
+  }; 
+  onCreateNote(user,newNote);
+  handleDeselect();
   };
+  handleDeselect();
+};
+
+   
+
   
 
   const handleTitleChange = (event) => {

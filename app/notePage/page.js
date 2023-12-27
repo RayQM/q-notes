@@ -9,14 +9,9 @@ import { addNote, updateNote } from "../component/services/notes-service";
 import { subscribeToNotes } from "../component/services/notes-service";
 const qNotes = () =>{
     const {user} = useUserAuth();
-    const tempNote = {
-        id:"",
-        title: "",
-        content: "",
-        date: ""
-    }
+   
     const [notes, setNotes] = useState([]);
-    const [selectedNote, setSelectedNote] = useState([tempNote])
+    const [selectedNote, setSelectedNote] = useState("")
 
     useEffect(() => {
     const unsubscribe = subscribeToNotes(user,setNotes);

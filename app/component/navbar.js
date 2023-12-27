@@ -16,11 +16,11 @@ function NavbarComponent() {
       const [buttonText, setButtonText] = useState(`Signed as: ${user.displayName}`);
     
       const handleMouseEnter = () => {
-        setButtonText(`Sign out: ${user.displayName}`);
+        setButtonText(`Sign out : ${user.displayName}`);
       };
     
       const handleMouseLeave = () => {
-        setButtonText(`Signed as: ${user.displayName}`);
+        setButtonText(`Signed in as: ${user.displayName}`);
       };
       
       
