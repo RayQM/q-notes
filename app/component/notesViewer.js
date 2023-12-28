@@ -14,9 +14,9 @@ const NotesViewer = ({notes,handleSelectedNote}) =>{
                     className='rounded-4 w-40 bg-dark text-white ' 
                     onClick={() => handleSelectedNote(notes)}>
                         <div className='hover:bg-sky-700 rounded-4'>
-                            <div className='text-center'>{notes.title}</div>
-                            <div style={{minHeight:"18dvh", wordBreak: "break-word"}} className="flex flex-wrap text-left p-3">{notes.content}</div>
-                            <div className='text-center'>{formatDate(notes)}</div>
+                            <h5 className='text-center text-capitalize '>{notes.title}</h5>
+                            <div style={{minHeight:"17dvh", maxHeight:"17dvh"  ,wordBreak: "break-word"}} className="flex flex-wrap text-left p-3 overflow-hidden">{notes.content}</div>
+                            <div className='text-center text-sm pt-2'>{formatDate(notes)}</div>
                         </div>
                     </li>
                 ))}

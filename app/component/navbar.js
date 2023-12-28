@@ -16,7 +16,7 @@ function NavbarComponent() {
       const [buttonText, setButtonText] = useState(`Signed as: ${user.displayName}`);
     
       const handleMouseEnter = () => {
-        setButtonText(`Sign out : ${user.displayName}`);
+        setButtonText(`Sign in out : ${user.displayName}`);
       };
     
       const handleMouseLeave = () => {
@@ -38,7 +38,7 @@ function NavbarComponent() {
           {/* ({hover? <Button  variant="secondary" className='text-white' onClick={handleSignOut}>
             Signed in as: {user.displayName}
           </Button>:<Button>Sign out: {user.displayName} </Button>}) */}
-          <Button  variant="secondary" className='text-white' onClick={handleSignOut}  onMouseEnter={handleMouseEnter}
+          <Button  variant="black" className='text-white bg-dark' onClick={handleSignOut}  onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
            {buttonText}
           </Button>

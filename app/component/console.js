@@ -102,8 +102,8 @@ const handleSubmit = (event) => {
   return (
     <form  onSubmit={handleSubmit}>
       <div className='flex flex-col bg-dark'style={{ maxHeight: "39.4dvh" }} > 
-        <div className='flex justify-center'><Button variant="secondary" className={classNames('mt-3' ,{ invisible: showAll !== true })} onClick={handleAllNotes} >All</Button></div>
-        <div className='items-center flex flex-row justify-center gap-2 px-20' style={{ minHeight: "33.4dvh" }}  >
+        <div className='flex justify-center'><Button variant="black" className={classNames('mt-3 text-white' ,{ invisible: showAll !== true })} onClick={handleAllNotes} >All Notes</Button></div>
+        <div className='items-center flex flex-row sm:flex-col justify-center gap-2 px-20' style={{ minHeight: "33.4dvh" }}  >
             <div className='container mx-4 flex flex-row gap-5 '>
               <div className='flex flex-col '>
                 <input required onChange={handleTitleChange} value={title} className="bg-secondary form-control  mb-4 " placeholder='Title'/>
@@ -119,7 +119,7 @@ const handleSubmit = (event) => {
               <textarea className="form-control form-control-lg bg-secondary " rows="5" placeholder='New Note' required onChange={handleContentChange} value={content}></textarea>
             </div>
             
-            <div className='flex flex-col gap-5'>
+            <div className='flex flex-col sm:flex-col gap-5'>
                 <Button variant="secondary" type='submit' >Save</Button>
                 <Button variant="secondary" onClick={deleteNoteFunc} >Delete</Button>
             </div>

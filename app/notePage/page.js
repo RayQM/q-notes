@@ -11,7 +11,7 @@ import _, { delay } from "lodash"
 import formatDate from "../component/dateFormat";
 import { count } from "firebase/firestore";
 import { resolve } from "styled-jsx/css";
-const qNotes = () =>{
+const QNotes = () =>{
     const {user} = useUserAuth();
    
     const [notes, setNotes] = useState([]);
@@ -24,7 +24,7 @@ const qNotes = () =>{
 
     useEffect(() => {
     return unsubscribe;
-    }, []);
+    });
 
     const notesList = (Notes) =>{
         const notesList = Notes
@@ -77,4 +77,4 @@ const qNotes = () =>{
        return redirect("/", RedirectType.push)
     }
 }
-export default qNotes;
+export default QNotes;
