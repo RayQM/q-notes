@@ -7,10 +7,9 @@ import ConsoleBar from "../component/console";
 import { useEffect,useState } from "react";
 import { addNote, updateNote } from "../component/services/notes-service";
 import { subscribeToNotes } from "../component/services/notes-service";
-import _, { delay } from "lodash"
+import _ from "lodash"
 import formatDate from "../component/dateFormat";
-import { count } from "firebase/firestore";
-import { resolve } from "styled-jsx/css";
+
 const QNotes = () =>{
     const {user} = useUserAuth();
    
@@ -22,16 +21,16 @@ const QNotes = () =>{
     }
 
 
-    useEffect(() => {
-    return unsubscribe;
-    });
+  
 
     const notesList = (Notes) =>{
         const notesList = Notes
         setNotes(notesList)
         setList(notesList)
     }
- 
+    useEffect(() => {
+    return unsubscribe;
+    },[user]);
     const handleCreateNote = (user,note) => {
             addNote(user,note);
         };
