@@ -1,5 +1,5 @@
 import {db} from "../../utility/firebase"
-
+import _ from "lodash"
 import {
     collection,
     deleteDoc,
@@ -39,7 +39,8 @@ import {
           event.date = event.date.toDate();
           event.date.setDate(event.date.getDate() + 1); 
         });
-        onUpdate(Notes);
+        
+        onUpdate(_.orderBy(Notes,'date'));
       });
     } catch (error) {
       console.error("Error in subscribeToEvents: ", error);

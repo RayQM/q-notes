@@ -7,16 +7,31 @@ import ConsoleBar from "../component/console";
 import { useEffect,useState } from "react";
 import { addNote, updateNote } from "../component/services/notes-service";
 import { subscribeToNotes } from "../component/services/notes-service";
+import _, { delay } from "lodash"
+import formatDate from "../component/dateFormat";
+import { count } from "firebase/firestore";
+import { resolve } from "styled-jsx/css";
 const qNotes = () =>{
     const {user} = useUserAuth();
    
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState("")
+    const [list,setList] = useState()
+    const unsubscribe = () =>{
+        subscribeToNotes(user,notesList);
+    }
+
 
     useEffect(() => {
-    const unsubscribe = subscribeToNotes(user,setNotes);
     return unsubscribe;
     }, []);
+
+    const notesList = (Notes) =>{
+        const notesList = Notes
+        setNotes(notesList)
+        setList(notesList)
+    }
+ 
     const handleCreateNote = (user,note) => {
             addNote(user,note);
         };
@@ -31,17 +46,29 @@ const qNotes = () =>{
         setSelectedNote(notes); 
         console.log(notes)
     }
+   
+    const handleSearchNote = (date) =>{
+        const noteList = list.filter((notes) => formatDate(notes) === date)
+        setNotes(noteList)
+        
+    }
+
+    const handleAllNotes = () =>{
+        unsubscribe()
+    }
 
     if(user){
         return(
         <main className=" flex flex-col">
             <NavbarComponent/>
-            <NotesViewer notes={notes} handleSelectedNote={handleSelectedNote}/>
+            <NotesViewer notes={notes}  handleSelectedNote={handleSelectedNote}/>
             <ConsoleBar 
             onCreateNote ={handleCreateNote}
             setSelectedNote={setSelectedNote}
             onEditNote = {handleEditNote}
             note={selectedNote}
+            onSearchNote = {handleSearchNote}
+            onRefirshList = {handleAllNotes}
             />
         </main>
     )

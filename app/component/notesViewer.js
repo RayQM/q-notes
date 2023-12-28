@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { getNotes } from './services/notes-service';
 import { useUserAuth } from '../utility/auth-context';
 import formatDate from './dateFormat';
+import { Button } from 'react-bootstrap';
 const NotesViewer = ({notes,handleSelectedNote}) =>{
-    
     return(
         <div  style={{ minHeight: "54.5dvh", maxHeight: "54.5dvh"}}  
         className="bg-secondary flex flex-row p-5 justify-center overflow-auto ">
