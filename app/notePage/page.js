@@ -9,6 +9,7 @@ import { addNote, updateNote } from "../component/services/notes-service";
 import { subscribeToNotes } from "../component/services/notes-service";
 import _ from "lodash"
 import formatDate from "../component/dateFormat";
+import { deleteNote } from "../component/services/notes-service";
 
 const QNotes = () =>{
     const {user} = useUserAuth();
@@ -33,11 +34,12 @@ const QNotes = () =>{
 
     const handleCreateNote = (user,note) => {
             addNote(user,note);
+            subscribeToNotes(user,notesList);
         };
     
     const handleEditNote = (user,note) =>{
         updateNote(user,note)
-
+        subscribeToNotes(user,notesList);
     }
     
     function handleSelectedNote (notes)
@@ -49,10 +51,15 @@ const QNotes = () =>{
     const handleSearchNote = (date) =>{
         const noteList = list.filter((notes) => formatDate(notes) === date)
         setNotes(noteList)
+       
         
     }
 
     const handleAllNotes = () =>{
+        subscribeToNotes(user,notesList);
+    }
+    const handleDeleteNotes = (note) =>{
+        deleteNote(user, note);
         subscribeToNotes(user,notesList);
     }
 
@@ -68,6 +75,7 @@ const QNotes = () =>{
             note={selectedNote}
             onSearchNote = {handleSearchNote}
             onRefirshList = {handleAllNotes}
+            onDeleteNotes = {handleDeleteNotes}
             />
         </main>
     )

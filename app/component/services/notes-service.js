@@ -24,29 +24,49 @@ import {
   };
   
  
-  export const subscribeToNotes = (user,onUpdate) => {
+  // export const subscribeToNotes = async (user,onUpdate) => {
 
-    try {
-      const colRef = collection(db,"users",user.uid, "notes");
+  //   try {
+  //     const colRef = collection(db,"users",user.uid, "notes");
   
-      return onSnapshot(colRef, (snapshot) => {
-        const Notes = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+  //     return  onSnapshot(colRef, (snapshot) => {
+  //       const Notes =  snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       }));
         
-        Notes.forEach((event) => {
-          event.date = event.date.toDate();
-          event.date.setDate(event.date.getDate() + 1); 
-        });
+  //       Notes.forEach((event) => {
+  //         event.date = event.date.toDate();
+  //         event.date.setDate(event.date.getDate() + 1); 
+  //       });
         
-        onUpdate(_.orderBy(Notes,'date'));
-      });
-    } catch (error) {
-      console.error("Error in subscribeToEvents: ", error);
-    }
-  };
+  //       onUpdate(_.orderBy(Notes,'date'));
+  //     });
+  //   } catch (error) {
+  //     console.error("Error in subscribeToEvents: ", error);
+  //   }
+  // };
+  export const subscribeToNotes = async(user,onUpdate) =>{
+    try{
+     const notesList = collection(db,"users",user.uid, "notes");
+      const querySnapshot = await getDocs(notesList)
+      console.log(querySnapshot)
+      const Notes =  querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              }));
+      Notes.forEach((event) => {
+                event.date = event.date.toDate();
+                event.date.setDate(event.date.getDate() + 1); 
+              });
+              
+        onUpdate(_.orderBy(Notes,'date')); 
 
+        }
+        catch(err){
+          console.error("Error in subscribeToEvents: ", error);
+        }
+  }
 
   export async function deleteNote(user, note) {
     try{

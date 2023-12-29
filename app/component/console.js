@@ -8,7 +8,8 @@ import { useState,useEffect } from 'react';
 import formatDate from './dateFormat';
 import classNames from 'classnames';
 
-function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote,onSearchNote,onRefirshList } ) {
+
+function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote,onSearchNote,onRefirshList,onDeleteNotes } ) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [content, setContent] = useState("");
@@ -75,7 +76,7 @@ const handleSubmit = (event) => {
   
   function deleteNoteFunc()
     { 
-        deleteNote(user, note);
+        onDeleteNotes(note)
         setSelectedNote();
         setTitle("");
         setContent("");
