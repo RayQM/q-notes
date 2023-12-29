@@ -8,6 +8,7 @@ function NavbarComponent() {
     const { user,firebaseSignOut} = useUserAuth();
     
     const handleSignOut = () => {
+
         firebaseSignOut();
       };
       

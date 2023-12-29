@@ -16,17 +16,19 @@ const QNotes = () =>{
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState("")
     const [list,setList] = useState()
+
+    
+   
     const notesList = (Notes) =>{
         const notesList = Notes
         setNotes(notesList)
         setList(notesList)
     } 
+    useEffect(() => {
     const unsubscribe = () =>{
         subscribeToNotes(user,notesList);
     }
-
-    useEffect(() => {
-    return unsubscribe;
+     return () => unsubscribe()
     },[]);
 
     const handleCreateNote = (user,note) => {
@@ -51,7 +53,7 @@ const QNotes = () =>{
     }
 
     const handleAllNotes = () =>{
-        unsubscribe()
+        subscribeToNotes(user,notesList);
     }
 
     if(user){
