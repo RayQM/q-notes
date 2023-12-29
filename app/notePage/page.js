@@ -29,7 +29,7 @@ const QNotes = () =>{
         subscribeToNotes(user,notesList);
     }
      return () => unsubscribe()
-    },[]);
+    },[user]);
 
     const handleCreateNote = (user,note) => {
             addNote(user,note);
