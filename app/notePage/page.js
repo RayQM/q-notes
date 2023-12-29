@@ -26,10 +26,10 @@ const QNotes = () =>{
         setList(notesList)
     } 
     useEffect(() => {
-    const unsubscribe = () =>{
+ 
         subscribeToNotes(user,notesList);
-    }
-     return () => unsubscribe()
+    
+    
     },[user]);
 
     const handleCreateNote = (user,note) => {
