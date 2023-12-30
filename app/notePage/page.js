@@ -26,20 +26,17 @@ const QNotes = () =>{
         setList(notesList)
     } 
     useEffect(() => {
- 
-        subscribeToNotes(user,notesList);
-    
-    
-    },[user]);
+        subscribeToNotes(user,notesList)
+    },[user,notesList]);
 
     const handleCreateNote = (user,note) => {
             addNote(user,note);
-            subscribeToNotes(user,notesList);
+            
         };
     
     const handleEditNote = (user,note) =>{
         updateNote(user,note)
-        subscribeToNotes(user,notesList);
+         
     }
     
     function handleSelectedNote (notes)
@@ -60,7 +57,7 @@ const QNotes = () =>{
     }
     const handleDeleteNotes = (note) =>{
         deleteNote(user, note);
-        subscribeToNotes(user,notesList);
+         
     }
 
     if(user){
