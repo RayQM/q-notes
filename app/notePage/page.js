@@ -34,9 +34,9 @@ const QNotes = () =>{
             subscribeToNotes(user,notesList)
         };
     
-    const handleEditNote = (user,note) =>{
+    const handleEditNote = async(user,note) =>{
         updateNote(user,note)
-        subscribeToNotes(user,notesList)
+        await subscribeToNotes(user,notesList)
     }
     
     function handleSelectedNote (notes)
