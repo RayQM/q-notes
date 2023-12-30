@@ -50,7 +50,6 @@ import {
     try{
      const notesList = collection(db,"users",user.uid, "notes");
       const querySnapshot = await getDocs(notesList)
-      console.log(querySnapshot)
       const Notes =  querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),

@@ -27,24 +27,33 @@ const QNotes = () =>{
     } 
     useEffect(() => {
         subscribeToNotes(user,notesList)
-    },[user,notesList]);
+    },[user]);
 
     const handleCreateNote = (user,note) => {
             addNote(user,note);
-            
+            subscribeToNotes(user,notesList)
         };
     
     const handleEditNote = (user,note) =>{
         updateNote(user,note)
-         
+        subscribeToNotes(user,notesList)
     }
     
     function handleSelectedNote (notes)
     {
         setSelectedNote(notes); 
-        console.log(notes)
+
     }
-   
+    const handleDiselectNote = () =>{
+        const newNote = {
+            id:"",
+            title:"",
+            date:new Date(),
+            content:""
+          }; 
+        setSelectedNote(newNote); 
+    }
+
     const handleSearchNote = (date) =>{
         const noteList = list.filter((notes) => formatDate(notes) === date)
         setNotes(noteList)
@@ -55,9 +64,11 @@ const QNotes = () =>{
     const handleAllNotes = () =>{
         subscribeToNotes(user,notesList);
     }
-    const handleDeleteNotes = (note) =>{
+    const handleDeleteNotes = (user,note) =>{
         deleteNote(user, note);
-         
+       const noteList = list.filter((notes)=> notes.id !== note.id)
+       setList(noteList)
+       setNotes(noteList)
     }
 
     if(user){
@@ -67,7 +78,7 @@ const QNotes = () =>{
             <NotesViewer notes={notes}  handleSelectedNote={handleSelectedNote}/>
             <ConsoleBar 
             onCreateNote ={handleCreateNote}
-            setSelectedNote={setSelectedNote}
+            setSelectedNote={handleDiselectNote}
             onEditNote = {handleEditNote}
             note={selectedNote}
             onSearchNote = {handleSearchNote}

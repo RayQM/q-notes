@@ -9,9 +9,9 @@ const NotesViewer = ({notes,handleSelectedNote}) =>{
         <div  style={{ minHeight: "54.5dvh", maxHeight: "54.5dvh"}}  
         className="bg-secondary flex flex-row p-4 justify-center overflow-auto ">
             <div >
-                <ul className='flex gap-6 flex-wrap'>{notes.map((notes)=>(
+                <ul className='flex gap-6 flex-wrap justify-center'>{notes.map((notes)=>(
                     <li key={notes.id} 
-                    className='rounded-4 w-40 bg-dark text-white ' 
+                    className='rounded-4 w-40 bg-dark text-white focus-ring-light ' 
                     onClick={() => handleSelectedNote(notes)}>
                         <div className='hover:bg-sky-700 rounded-4'>
                             <h5 className='text-center text-capitalize '>{notes.title}</h5>

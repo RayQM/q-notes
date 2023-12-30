@@ -45,6 +45,7 @@ const handleSubmit = (event) => {
     }; 
     console.log(newNote)
     onEditNote(user,newNote)
+
   }
   else{
     const newNote = {
@@ -53,9 +54,9 @@ const handleSubmit = (event) => {
     content, 
   }; 
   onCreateNote(user,newNote);
-  handleDeselect();
+ 
   };
-  handleDeselect();
+  setSelectedNote();
 };
 
    
@@ -75,21 +76,18 @@ const handleSubmit = (event) => {
   };
   
   function deleteNoteFunc()
-    { 
-        onDeleteNotes(note)
+    {   const newNote = {
+      id:note.id,
+      title,
+      date:new Date(date),
+      content, 
+    }; 
+        onDeleteNotes(user,newNote)
         setSelectedNote();
-        setTitle("");
-        setContent("");
-        setDate(""); 
        
     }
 
-    function handleDeselect()
-    {
-
-      setSelectedNote();
-    }
-
+    
    const handleSearchNote = () =>{
     onSearchNote(date)
     setShowAll(true)
@@ -102,10 +100,10 @@ const handleSubmit = (event) => {
 
   return (
     <form  onSubmit={handleSubmit}>
-      <div className='flex flex-col bg-dark'style={{ maxHeight: "39.4dvh" }} > 
+      <div className='flex flex-col bg-dark'style={{ minHeight: "39.4dvh" }} > 
         <div className='flex justify-center'><Button variant="black" className={classNames('mt-3 text-white' ,{ invisible: showAll !== true })} onClick={handleAllNotes} >All Notes</Button></div>
-        <div className='items-center flex flex-row sm:flex-col justify-center gap-2 px-20' style={{ minHeight: "33.4dvh" }}  >
-            <div className='container mx-4 flex flex-row gap-5 '>
+        <div className='items-center flex flex-col sm:flex-row  justify-center gap-2 px-20' style={{ minHeight: "33.4dvh" }}  >
+            <div className='container mx-4 flex flex-col sm:flex-row gap-5 '>
               <div className='flex flex-col '>
                 <input required onChange={handleTitleChange} value={title} className="bg-secondary form-control  mb-4 " placeholder='Title'/>
                 <input
@@ -117,7 +115,7 @@ const handleSubmit = (event) => {
                 />
                 <Button variant="secondary" onClick={handleSearchNote}>Search By Date</Button>
               </div>
-              <textarea className="form-control form-control-lg bg-secondary " rows="5" placeholder='New Note' required onChange={handleContentChange} value={content}></textarea>
+              <textarea className="form-control form-control-lg bg-secondary focus-ring-light " rows="5" placeholder='New Note' required onChange={handleContentChange} value={content}></textarea>
             </div>
             
             <div className='flex flex-col sm:flex-col gap-5'>
