@@ -54,9 +54,9 @@ const handleSubmit = (event) => {
     content, 
   }; 
   onCreateNote(user,newNote);
- 
   };
   setSelectedNote();
+  
 };
 
    
