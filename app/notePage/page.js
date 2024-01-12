@@ -70,10 +70,12 @@ const QNotes = () =>{
        setList(noteList)
        setNotes(noteList)
     }
+    
 
     if(user){
         return(
         <main className=" flex flex-col">
+            
             <NavbarComponent/>
             <NotesViewer notes={notes}  handleSelectedNote={handleSelectedNote}/>
             <ConsoleBar 
@@ -85,6 +87,7 @@ const QNotes = () =>{
             onRefirshList = {handleAllNotes}
             onDeleteNotes = {handleDeleteNotes}
             />
+            
         </main>
     )
     }

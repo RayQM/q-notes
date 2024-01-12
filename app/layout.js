@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthContextProvider } from "./utility/auth-context";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Providers } from "./Redux/provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -11,11 +13,17 @@ export const metadata = {
 
 const Layout = ({ children }) => {
   return (
+    
     <html lang="en">
+      <Providers>
       <body>
-      <AuthContextProvider>{children}</AuthContextProvider>
+         <AuthContextProvider>
+          {children}
+        </AuthContextProvider>
       </body>
+      </Providers>
     </html>
+   
   );
 };
 

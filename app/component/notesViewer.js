@@ -5,20 +5,23 @@ import { useUserAuth } from '../utility/auth-context';
 import formatDate from './dateFormat';
 import { Button } from 'react-bootstrap';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { setShowBarToTrue } from '../Redux/feature/controlBar/controlBar';
  const NotesViewer = ({notes,handleSelectedNote}) =>{
-
+    const dispatch = useDispatch()
     const [heightLight,setHeightLight] = useState(false)
     const [selectedNote,setSelectedNote] = useState("")
-
+    const show = useSelector((state) => state.controlBar.show)
     const handleHeightLight = (note) =>{
         handleSelectedNote(note)
         if (notes.id = note.id )
         setHeightLight(true)
         setSelectedNote(note)
+        dispatch(setShowBarToTrue())
     }
 
     return(
-        <div  style={{ minHeight: "54.5dvh", maxHeight: "54.5dvh"}}  
+        <div  style={show === true? { minHeight: "54.5dvh", maxHeight: "54.5dvh"}: {minHeight:"87.9dvh",maxHeight:"87.9dvh"}}  
         className="bg-secondary flex flex-row p-4 justify-center overflow-auto ">
             <div >
                 <ul className='flex gap-6 flex-wrap justify-center'>{notes.map((note)=>(

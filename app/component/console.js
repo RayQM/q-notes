@@ -1,3 +1,4 @@
+'use client'
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
@@ -7,7 +8,8 @@ import { updateNote } from './services/notes-service';
 import { useState,useEffect } from 'react';
 import formatDate from './dateFormat';
 import classNames from 'classnames';
-
+import { useSelector,useDispatch } from 'react-redux';
+import { setShowBarToFalse,setShowBarToTrue } from '../Redux/feature/controlBar/controlBar';
 
 function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote,onSearchNote,onRefirshList,onDeleteNotes } ) {
   const [title, setTitle] = useState("");
@@ -15,6 +17,10 @@ function ConsoleBar({onCreateNote,note,setSelectedNote,onEditNote,onSearchNote,o
   const [content, setContent] = useState("");
   const { user} = useUserAuth();
   const [showAll , setShowAll] = useState(false)
+  const show = useSelector((state) => state.controlBar.show)
+  const dispatch = useDispatch()
+
+
   useEffect(
     () => {
         if(note){
@@ -98,12 +104,31 @@ const handleSubmit = (event) => {
     setShowAll(false)
    }
 
+   const test = () =>{
+     
+      dispatch(setShowBarToTrue())
+      console.log(show)
+   }
+
   return (
-    <form  onSubmit={handleSubmit}>
-      <div className='flex flex-col bg-dark'style={{ minHeight: "39.4dvh" }} > 
-        <div className='flex justify-center'>
-          <Button variant="black" className={classNames('mt-3 text-white' ,{ invisible: showAll !== true })} onClick={handleAllNotes} >All Notes</Button></div>
-        <div className='items-center flex flex-col sm:flex-row  justify-center gap-2 px-20' style={{ minHeight: "33.4dvh" }}  >
+    
+    <form  onSubmit={handleSubmit} >
+      <div className='flex justify-center bg-dark'>
+          <Button className={classNames('border-dark bg-dark',{ invisible: show !== false })} onClick={()=>test()}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" className="bi bi-arrow-bar-up " viewBox="0 0 16 16">
+             <path fillRule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5m-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5" />
+          </svg>
+          </Button>
+          <Button variant="black" className={classNames('mt-3 text-white' ,{ invisible: showAll !== true })} onClick={handleAllNotes} >All Notes</Button>
+          <Button className={classNames('border-dark bg-dark',{ invisible: show !== true })} onClick={() => dispatch(setShowBarToFalse())}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" className="bi bi-arrow-bar-down " viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6" />
+            </svg>
+          </Button>
+        </div>
+      <div className='flex flex-col bg-dark'  style={show ===true?{ minHeight: "32dvh" }:{minHeight:"0dvh"}} > 
+        
+        <div className={classNames('items-center flex flex-col sm:flex-row  justify-center gap-2 px-20', {hidden : show !== true})} style={{ minHeight: "33.4dvh" }}  >
             <div className='container mx-4 flex flex-col sm:flex-row gap-5 '>
               <div className='flex flex-col '>
                 <input required onChange={handleTitleChange} value={title} className="bg-secondary form-control  mb-4 " placeholder='Title'/>
@@ -123,9 +148,8 @@ const handleSubmit = (event) => {
                   <Button variant="secondary " className='w-28 h-14' type='submit' >Save</Button>
                   <Button variant="secondary " className='w-28 h-14' onClick={deleteNoteFunc} >Delete</Button>
                 </div>
-            </div>
-                
-      </div>
+            </div>      
+        </div>
      
     </form>
     
