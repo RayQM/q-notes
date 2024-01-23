@@ -144,7 +144,7 @@ const handleSubmit = (event) => {
               <textarea className="form-control form-control-lg bg-secondary focus-ring-light " rows="5" placeholder='New Note' required onChange={handleContentChange} value={content}></textarea>
              
             </div>
-                <div className='flex flex-col  gap-5'>
+                <div className='flex lg:flex-col sm:flex-row  gap-5'>
                   <Button variant="secondary " className='w-28 h-14' type='submit' >Save</Button>
                   <Button variant="secondary " className='w-28 h-14' onClick={deleteNoteFunc} >Delete</Button>
                 </div>
